@@ -7,17 +7,16 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
-class ViewController: UIViewController {
-    var tableData: [PEntry] = []
+class ViewController: UIViewController, FirebasePageableDelegate, UITableViewDataSource, UITableViewDelegate {
+    var dataSource: FirebasePageableDataSource!
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dataSource = FirebasePageableDataSource(path: "feed", pageSize: 20, orderByChild: "createdAt", delegate: self, getFromSnapshot: getFromSnapshot)
         
-        let entry = PEntry(title: "Hallo", text: "Welt", createdAt: 1469621535373, uid: "a1")
-        tableData.append(entry)
-        
-        let ds = FirebasePageableDataSource(path: "feed", pageSize: 20, orderByChild: "createdAt")
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,9 +24,9 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PEntry")
-        let entry = tableData[indexPath.row]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PEntry")
+        let entry = dataSource.pageables[indexPath.row] as! PEntry
         
         if let title = cell!.viewWithTag(1) as? UILabel {
             title.text = entry.title
@@ -40,8 +39,26 @@ class ViewController: UIViewController {
         return cell!
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("tableData.count: \(tableData.count)")
-        return tableData.count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if dataSource.pageables != nil {
+            print("dataSource.pageables.count: \(dataSource.pageables.count)")
+            return dataSource.pageables.count
+        }
+        
+        return 0
+    }
+    
+    func pageLoaded() {
+        tableView.reloadData()
+    }
+    
+    func getFromSnapshot(snapshot: FIRDataSnapshot) -> Pageable {
+        return PEntry(snapshot: snapshot)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) {
+            dataSource.loadNextPage()
+        }
     }
 }

@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		021418CF1DFD8C6800EB4880 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021418CE1DFD8C6800EB4880 /* AppDelegate.swift */; };
-		021418D11DFD8C6800EB4880 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021418D01DFD8C6800EB4880 /* ViewController.swift */; };
 		021418D41DFD8C6800EB4880 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 021418D21DFD8C6800EB4880 /* Main.storyboard */; };
 		021418D61DFD8C6800EB4880 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 021418D51DFD8C6800EB4880 /* Assets.xcassets */; };
 		021418D91DFD8C6800EB4880 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 021418D71DFD8C6800EB4880 /* LaunchScreen.storyboard */; };
 		021418E11DFD8E6A00EB4880 /* PEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021418E01DFD8E6A00EB4880 /* PEntry.swift */; };
 		021418E31DFD96A500EB4880 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 021418E21DFD96A500EB4880 /* GoogleService-Info.plist */; };
 		021418E51DFD978100EB4880 /* FirebasePageableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021418E41DFD978100EB4880 /* FirebasePageableDataSource.swift */; };
+		02BF51481DFEDA9100B3393D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF51471DFEDA9100B3393D /* ViewController.swift */; };
 		F77CB05AA714A02C8244A83C /* Pods_SwiftPager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0107887D3FCBFEEC22E1935B /* Pods_SwiftPager.framework */; };
 /* End PBXBuildFile section */
 
@@ -22,7 +22,6 @@
 		0107887D3FCBFEEC22E1935B /* Pods_SwiftPager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftPager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		021418CB1DFD8C6700EB4880 /* SwiftPager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftPager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		021418CE1DFD8C6800EB4880 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		021418D01DFD8C6800EB4880 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		021418D31DFD8C6800EB4880 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		021418D51DFD8C6800EB4880 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		021418D81DFD8C6800EB4880 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -30,6 +29,7 @@
 		021418E01DFD8E6A00EB4880 /* PEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PEntry.swift; sourceTree = "<group>"; };
 		021418E21DFD96A500EB4880 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		021418E41DFD978100EB4880 /* FirebasePageableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebasePageableDataSource.swift; sourceTree = "<group>"; };
+		02BF51471DFEDA9100B3393D /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4D4EABEA49E63400249E985A /* Pods-SwiftPager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftPager.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftPager/Pods-SwiftPager.debug.xcconfig"; sourceTree = "<group>"; };
 		B3D0ED558DF1F6DE1F3F0A11 /* Pods-SwiftPager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftPager.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftPager/Pods-SwiftPager.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,9 +67,9 @@
 		021418CD1DFD8C6800EB4880 /* SwiftPager */ = {
 			isa = PBXGroup;
 			children = (
+				02BF51471DFEDA9100B3393D /* ViewController.swift */,
 				021418E21DFD96A500EB4880 /* GoogleService-Info.plist */,
 				021418CE1DFD8C6800EB4880 /* AppDelegate.swift */,
-				021418D01DFD8C6800EB4880 /* ViewController.swift */,
 				021418D21DFD8C6800EB4880 /* Main.storyboard */,
 				021418D51DFD8C6800EB4880 /* Assets.xcassets */,
 				021418D71DFD8C6800EB4880 /* LaunchScreen.storyboard */,
@@ -132,6 +132,7 @@
 				TargetAttributes = {
 					021418CA1DFD8C6700EB4880 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
@@ -222,7 +223,7 @@
 			files = (
 				021418E51DFD978100EB4880 /* FirebasePageableDataSource.swift in Sources */,
 				021418E11DFD8E6A00EB4880 /* PEntry.swift in Sources */,
-				021418D11DFD8C6800EB4880 /* ViewController.swift in Sources */,
+				02BF51481DFEDA9100B3393D /* ViewController.swift in Sources */,
 				021418CF1DFD8C6800EB4880 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,6 +342,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = SnoozeSoft.SwiftPager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -353,6 +355,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = SnoozeSoft.SwiftPager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
