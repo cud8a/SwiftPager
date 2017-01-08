@@ -14,7 +14,9 @@ protocol Pageable {
 }
 
 protocol FirebasePageableDelegate {
+    func pageLoading()
     func pageLoaded()
+    func lastPageLoaded()
     func itemAdded()
 }
 
@@ -89,6 +91,7 @@ class FirebasePageableDataSource {
             delegate.pageLoaded()
         } else {
             nothingLeftToLoad = true
+            delegate.lastPageLoaded()
         }
     }
     
@@ -97,6 +100,7 @@ class FirebasePageableDataSource {
             print("FirebasePageableDataSource: nothing left to load")
         } else {
             if !loadingNextPage {
+                delegate.pageLoading()
                 loadingNextPage = true
                 print("FirebasePageableDataSource: loading next page")
                 let query = FIRDatabase.database().reference(withPath: path).queryOrdered(byChild: orderByChild).queryEnding(atValue: valueWhereTheNextPageBegins).queryLimited(toLast: pageSize)

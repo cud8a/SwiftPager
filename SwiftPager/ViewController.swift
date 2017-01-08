@@ -51,11 +51,22 @@ class ViewController: UIViewController, FirebasePageableDelegate, UITableViewDat
     // a new page was loaded, our table must be updated
     func pageLoaded() {
         tableView.reloadData()
+        tableView.alpha = 1
     }
     
     // a new item was added at the top of our list
     func itemAdded() {
         tableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
+    }
+    
+    // loading in progress
+    func pageLoading() {
+        tableView.alpha = 0.5
+    }
+    
+    // nothing left to load
+    func lastPageLoaded() {
+        tableView.alpha = 1
     }
 
     // convert the Firebase snapshot into our model
