@@ -61,4 +61,12 @@ This is an example of a most basic ViewController using the PageableDataSource:
         func getFromSnapshot(snapshot: FIRDataSnapshot) -> Pageable {
             return PEntry(snapshot: snapshot)
         }
+
+        // we scrolled to the end of our table, let´s load the next page
+        func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) {
+                dataSource.loadNextPage()
+            }
+        }
     }
+
