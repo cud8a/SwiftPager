@@ -5,7 +5,8 @@ Adds paging support for large Firebase Database nodes. The paging is based on a 
 ## Usage
 This will create a pageable datasource on the node 'feed' with a page size of 20 ordered by the child node 'createdAt'
 
-    dataSource = FirebasePageableDataSource(path: "feed", pageSize: 20, orderByChild: "createdAt", delegate: self, getFromSnapshot: getFromSnapshot)
+    dataSource = FirebasePageableDataSource(path: "feed", pageSize: 20, orderByChild: "createdAt",
+        delegate: self, getFromSnapshot: getFromSnapshot)
     
 This is an example of a most basic ViewController using the PageableDataSource:
 
@@ -59,12 +60,5 @@ This is an example of a most basic ViewController using the PageableDataSource:
         // convert the Firebase snapshot into our model
         func getFromSnapshot(snapshot: FIRDataSnapshot) -> Pageable {
             return PEntry(snapshot: snapshot)
-        }
-        
-        // we scrolled to the end of our table, let´s load the next page
-        func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) {
-                dataSource.loadNextPage()
-            }
         }
     }
