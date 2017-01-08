@@ -15,7 +15,7 @@ class ViewController: UIViewController, FirebasePageableDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataSource = FirebasePageableDataSource(path: "feed", pageSize: 20, orderByChild: "createdAt", delegate: self, getFromSnapshot: getFromSnapshot)
+        dataSource = FirebasePageableDataSource(path: "feed", pageSize: 15, orderByChild: "createdAt", delegate: self, getFromSnapshot: getFromSnapshot)
         
     }
 
@@ -48,14 +48,22 @@ class ViewController: UIViewController, FirebasePageableDelegate, UITableViewDat
         return 0
     }
     
+    // a new page was loaded, our table must be updated
     func pageLoaded() {
         tableView.reloadData()
     }
     
+    // a new item was added at the top of our list
+    func itemAdded() {
+        tableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
+    }
+
+    // convert the Firebase snapshot into our model
     func getFromSnapshot(snapshot: FIRDataSnapshot) -> Pageable {
         return PEntry(snapshot: snapshot)
     }
     
+    // we scrolled to the end of our table, let´s load the next page
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) {
             dataSource.loadNextPage()

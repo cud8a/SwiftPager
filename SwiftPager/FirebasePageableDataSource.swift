@@ -15,6 +15,7 @@ protocol Pageable {
 
 protocol FirebasePageableDelegate {
     func pageLoaded()
+    func itemAdded()
 }
 
 class FirebasePageableDataSource {
@@ -22,7 +23,7 @@ class FirebasePageableDataSource {
     var getFromSnapshot: ((FIRDataSnapshot)->Pageable)!
     
     var path: String!
-    var pageSize: Int!
+    var pageSize: UInt!
     var orderByChild: String!
     
     var delegate: FirebasePageableDelegate!
@@ -31,7 +32,9 @@ class FirebasePageableDataSource {
     var loadingNextPage = false
     var nothingLeftToLoad = false
     
-    init(path: String, pageSize: Int, orderByChild: String, delegate: FirebasePageableDelegate, getFromSnapshot: @escaping ((FIRDataSnapshot)->Pageable)) {
+    var ignoreFirstAdd = true
+    
+    init(path: String, pageSize: UInt, orderByChild: String, delegate: FirebasePageableDelegate, getFromSnapshot: @escaping ((FIRDataSnapshot)->Pageable)) {
         self.path = path
         self.pageSize = pageSize
         self.orderByChild = orderByChild
@@ -39,10 +42,22 @@ class FirebasePageableDataSource {
         self.getFromSnapshot = getFromSnapshot
         pageables = []
         
-        let query = FIRDatabase.database().reference(withPath: path).queryOrdered(byChild: orderByChild).queryLimited(toLast: 20)
+        let query = FIRDatabase.database().reference(withPath: path).queryOrdered(byChild: orderByChild).queryLimited(toLast: pageSize)
         query.observeSingleEvent(of: .value, with: {
         (snapshot) in
             self.addPage(snapshot: snapshot, atIndex: 0, ignoreLastEntry: false)
+            
+            let queryForListeningToAdds = FIRDatabase.database().reference(withPath: path).queryOrdered(byChild: orderByChild).queryLimited(toLast: 1)
+            queryForListeningToAdds.observe(FIRDataEventType.childAdded, with: {
+                (snapshot) in
+                if !self.ignoreFirstAdd && !self.loadingNextPage {
+                    let entry = self.getFromSnapshot(snapshot)
+                    self.pageables.insert(entry, at: 0)
+                    self.delegate.itemAdded()
+                }
+                
+                self.ignoreFirstAdd = false
+            })
         })
     }
     
@@ -58,7 +73,6 @@ class FirebasePageableDataSource {
             if added < maxAdd {
                 if let snap = child as? FIRDataSnapshot {
                     let entry = self.getFromSnapshot(snap)
-                
                 
                     if firstEntry == nil {
                         firstEntry = entry
@@ -85,7 +99,7 @@ class FirebasePageableDataSource {
             if !loadingNextPage {
                 loadingNextPage = true
                 print("FirebasePageableDataSource: loading next page")
-                let query = FIRDatabase.database().reference(withPath: path).queryOrdered(byChild: orderByChild).queryEnding(atValue: valueWhereTheNextPageBegins).queryLimited(toLast: 20)
+                let query = FIRDatabase.database().reference(withPath: path).queryOrdered(byChild: orderByChild).queryEnding(atValue: valueWhereTheNextPageBegins).queryLimited(toLast: pageSize)
                 query.observeSingleEvent(of: .value, with: {
                     (snapshot) in
                     self.addPage(snapshot: snapshot, atIndex: self.pageables.count, ignoreLastEntry: true)
